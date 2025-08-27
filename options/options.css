@@ -1,0 +1,377 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.settings-section,
+.rules-section,
+.stats-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.settings-section h2,
+.rules-section h2,
+.stats-section h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.setting-item {
+    margin-bottom: 15px;
+}
+
+.setting-item label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.setting-item input[type="text"],
+.setting-item input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.setting-item input[type="text"]:focus,
+.setting-item input[type="password"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.setting-item input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+.rule-form {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-row input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.time-inputs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.time-inputs input {
+    width: 60px;
+    padding: 8px;
+    border: 2px solid #e1e8ed;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.time-inputs span {
+    font-weight: 500;
+    color: #666;
+}
+
+.days-checkboxes {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.days-checkboxes label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.days-checkboxes input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.rules-list h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+#rules-container {
+    list-style: none;
+}
+
+#rules-container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.rule-info {
+    flex: 1;
+}
+
+.rule-info .domain {
+    display: block;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.rule-info .time,
+.rule-info .days {
+    display: inline-block;
+    margin-right: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.delete-rule {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-rule:hover {
+    background: #c0392b;
+}
+
+/* 统计区域样式 */
+.stats-overview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.stats-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.stats-item .label {
+    display: block;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.stats-item span:last-child {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.category-breakdown {
+    margin-bottom: 25px;
+}
+
+.category-breakdown h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.category-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.category-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.category-label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.category-details {
+    font-size: 12px;
+    color: #666;
+}
+
+.category-percentage {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 16px;
+}
+
+.stats-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5a6fd8;
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background: #27ae60;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #229954;
+    transform: translateY(-2px);
+}
+
+.btn-warning {
+    background: #f39c12;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #e67e22;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+    transform: translateY(-2px);
+}
+
+.actions {
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .settings-section,
+    .rules-section,
+    .stats-section {
+        padding: 15px;
+    }
+    
+    .time-inputs {
+        flex-wrap: wrap;
+    }
+    
+    .days-checkboxes {
+        gap: 10px;
+    }
+    
+    .stats-overview {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stats-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn {
+        margin: 0;
+    }
+}

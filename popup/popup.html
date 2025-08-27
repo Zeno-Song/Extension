@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页访问控制</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>网页访问控制</h1>
+        </div>
+        
+        <div class="status-section">
+            <div class="status-item">
+                <span class="label">状态：</span>
+                <span id="status" class="status">加载中...</span>
+            </div>
+            
+            <div class="status-item">
+                <span class="label">规则：</span>
+                <span id="rules-count">0/0 条规则生效中</span>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button id="toggle-btn" class="btn">加载中...</button>
+            <button id="open-options" class="btn btn-secondary">设置</button>
+        </div>
+        
+        <!-- 访问统计区域 -->
+        <div class="stats-section">
+            <div class="stats-header">
+                <h3>今日访问统计</h3>
+                <button id="reset-stats" class="btn btn-small">重置</button>
+            </div>
+            
+            <div class="total-time">
+                <span class="label">总访问时间：</span>
+                <span id="total-time">0分钟</span>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="stats-chart" width="200" height="200"></canvas>
+            </div>
+            
+            <div class="category-stats" id="category-stats">
+                <!-- 分类统计将在这里动态生成 -->
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>点击设置按钮管理黑名单规则</p>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

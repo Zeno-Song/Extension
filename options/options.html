@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页访问控制 - 设置</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>网页访问控制设置</h1>
+        </header>
+        
+        <div class="settings-section">
+            <h2>基本设置</h2>
+            
+            <div class="setting-item">
+                <label>
+                    <input type="checkbox" id="enabled">
+                    启用访问控制
+                </label>
+            </div>
+            
+            <div class="setting-item">
+                <label for="password">管理密码：</label>
+                <input type="password" id="password" placeholder="设置管理密码">
+            </div>
+            
+            <div class="setting-item">
+                <label for="confirm-password">确认密码：</label>
+                <input type="password" id="confirm-password" placeholder="再次输入密码">
+            </div>
+        </div>
+        
+        <div class="rules-section">
+            <h2>黑名单规则</h2>
+            
+            <div class="add-rule">
+                <div class="rule-form">
+                    <div class="form-row">
+                        <label for="domain">域名：</label>
+                        <input type="text" id="domain" placeholder="例如：youtube.com">
+                    </div>
+                    
+                    <div class="form-row">
+                        <label>时间范围：</label>
+                        <div class="time-inputs">
+                            <input type="number" id="start-hour" min="0" max="23" placeholder="9">
+                            <span>:</span>
+                            <input type="number" id="start-minute" min="0" max="59" placeholder="0">
+                            <span>至</span>
+                            <input type="number" id="end-hour" min="0" max="23" placeholder="18">
+                            <span>:</span>
+                            <input type="number" id="end-minute" min="0" max="59" placeholder="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <label>生效日期：</label>
+                        <div class="days-checkboxes">
+                            <label><input type="checkbox" name="day" value="0">日</label>
+                            <label><input type="checkbox" name="day" value="1">一</label>
+                            <label><input type="checkbox" name="day" value="2">二</label>
+                            <label><input type="checkbox" name="day" value="3">三</label>
+                            <label><input type="checkbox" name="day" value="4">四</label>
+                            <label><input type="checkbox" name="day" value="5">五</label>
+                            <label><input type="checkbox" name="day" value="6">六</label>
+                        </div>
+                    </div>
+                    
+                    <button id="add-rule" class="btn btn-primary">添加规则</button>
+                </div>
+            </div>
+            
+            <div class="rules-list">
+                <h3>当前规则</h3>
+                <ul id="rules-container">
+                    <!-- 规则列表将通过JavaScript动态生成 -->
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 统计管理区域 -->
+        <div class="stats-section">
+            <h2>访问统计管理</h2>
+            
+            <div class="stats-overview">
+                <div class="stats-item">
+                    <span class="label">总访问时间：</span>
+                    <span id="total-time-display">0分钟</span>
+                </div>
+                <div class="stats-item">
+                    <span class="label">最后访问：</span>
+                    <span id="last-visit-display">从未访问</span>
+                </div>
+            </div>
+            
+            <div class="category-breakdown">
+                <h3>分类统计</h3>
+                <div id="category-breakdown-list">
+                    <!-- 分类统计将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <div class="stats-actions">
+                <button id="reset-stats" class="btn btn-warning">重置所有统计数据</button>
+                <button id="export-stats" class="btn btn-secondary">导出统计数据</button>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button id="save-settings" class="btn btn-success">保存设置</button>
+        </div>
+    </div>
+    
+    <script src="options.js"></script>
+</body>
+</html>

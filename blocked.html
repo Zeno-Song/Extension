@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访问被阻止</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+        }
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 28px;
+        }
+        p {
+            margin: 0 0 30px 0;
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .time-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚫</div>
+        <h1>访问被阻止</h1>
+        <p>根据您设置的访问控制规则，该网站当前无法访问。</p>
+        
+        <div class="time-info">
+            <p>当前时间：<span id="current-time"></span></p>
+            <p>当前日期：<span id="current-date"></span></p>
+        </div>
+        
+        <div>
+            <button class="btn" onclick="goBack()">返回上一页</button>
+            <button class="btn" onclick="goHome()">返回首页</button>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 14px; opacity: 0.7;">
+            如需修改设置，请点击浏览器工具栏中的扩展图标
+        </p>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN');
+            const dateString = now.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+            });
+            
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-date').textContent = dateString;
+        }
+        
+        function goBack() {
+            window.history.back();
+        }
+        
+        function goHome() {
+            window.location.href = 'https://www.google.com';
+        }
+        
+        // 更新时间
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html> 
