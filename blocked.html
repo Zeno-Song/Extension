@@ -74,42 +74,12 @@
             <p>当前日期：<span id="current-date"></span></p>
         </div>
         
-        <div>
-            <button class="btn" onclick="goBack()">返回上一页</button>
-            <button class="btn" onclick="goHome()">返回首页</button>
-        </div>
-        
         <p style="margin-top: 30px; font-size: 14px; opacity: 0.7;">
             如需修改设置，请点击浏览器工具栏中的扩展图标
         </p>
     </div>
 
-    <script>
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('zh-CN');
-            const dateString = now.toLocaleDateString('zh-CN', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                weekday: 'long'
-            });
-            
-            document.getElementById('current-time').textContent = timeString;
-            document.getElementById('current-date').textContent = dateString;
-        }
-        
-        function goBack() {
-            window.history.back();
-        }
-        
-        function goHome() {
-            window.location.href = 'https://www.google.com';
-        }
-        
-        // 更新时间
-        updateTime();
-        setInterval(updateTime, 1000);
-    </script>
+    <script src="blocked.js"></script>
+
 </body>
 </html> 

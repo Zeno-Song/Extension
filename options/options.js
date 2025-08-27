@@ -5,104 +5,13 @@ let settings = {
   rules: []
 };
 
-// 分类颜色配置
-const categoryColors = {
-  'social': '#FF6B6B',
-  'entertainment': '#4ECDC4',
-  'work': '#45B7D1',
-  'shopping': '#96CEB4',
-  'news': '#FFEAA7',
-  'other': '#DDA0DD'
-};
-
 // 加载设置
 chrome.storage.sync.get(['settings'], (result) => {
   if (result.settings) {
     settings = { ...settings, ...result.settings };
   }
   renderSettings();
-  updateStatsDisplay();
 });
-
-// 格式化时间显示
-function formatTime(milliseconds) {
-  const minutes = Math.floor(milliseconds / (1000 * 60));
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  
-  if (hours > 0) {
-    return `${hours}小时${remainingMinutes}分钟`;
-  } else {
-    return `${minutes}分钟`;
-  }
-}
-
-// 格式化日期显示
-function formatDate(timestamp) {
-  if (!timestamp) return '从未访问';
-  
-  const date = new Date(timestamp);
-  const now = new Date();
-  const diff = now - date;
-  
-  if (diff < 24 * 60 * 60 * 1000) {
-    // 今天
-    return `今天 ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-  } else if (diff < 48 * 60 * 60 * 1000) {
-    // 昨天
-    return `昨天 ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-  } else {
-    // 更早
-    return `${date.getMonth() + 1}月${date.getDate()}日 ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-  }
-}
-
-// 更新统计显示
-function updateStatsDisplay() {
-  chrome.runtime.sendMessage({ action: 'getVisitStats' }, (response) => {
-    if (response && response.stats && response.categories) {
-      const stats = response.stats;
-      const categories = response.categories;
-      
-      // 更新总时间和最后访问
-      document.getElementById('total-time-display').textContent = formatTime(stats.totalTime);
-      document.getElementById('last-visit-display').textContent = formatDate(stats.lastVisit);
-      
-      // 更新分类统计
-      const categoryList = document.getElementById('category-breakdown-list');
-      categoryList.innerHTML = '';
-      
-      const sortedCategories = Object.entries(stats.categories)
-        .filter(([category, data]) => data.time > 0)
-        .sort((a, b) => b[1].time - a[1].time);
-      
-      sortedCategories.forEach(([category, data]) => {
-        const percentage = stats.totalTime > 0 ? ((data.time / stats.totalTime) * 100).toFixed(1) : 0;
-        const categoryName = categories[category]?.name || '其他';
-        const color = categoryColors[category] || categoryColors.other;
-        
-        const categoryItem = document.createElement('div');
-        categoryItem.className = 'category-item';
-        categoryItem.innerHTML = `
-          <div class="category-name">
-            <div class="category-color" style="background-color: ${color}"></div>
-            <div class="category-info">
-              <div class="category-label">${categoryName}</div>
-              <div class="category-details">${formatTime(data.time)} · ${data.visits}次访问</div>
-            </div>
-          </div>
-          <div class="category-percentage">${percentage}%</div>
-        `;
-        
-        categoryList.appendChild(categoryItem);
-      });
-      
-      if (sortedCategories.length === 0) {
-        categoryList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">暂无访问数据</p>';
-      }
-    }
-  });
-}
 
 // 渲染设置界面
 function renderSettings() {
@@ -145,7 +54,6 @@ function renderSettings() {
   // 添加删除规则事件
   document.querySelectorAll('.delete-rule').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      console.log('1', e.target)
       const index = parseInt(e.target.getAttribute('data-index'));
       settings.rules.splice(index, 1);
       renderSettings();
@@ -187,23 +95,6 @@ document.getElementById('add-rule').addEventListener('click', () => {
   renderSettings();
 });
 
-// 重置统计数据
-document.getElementById('reset-stats').addEventListener('click', () => {
-  if (confirm('确定要重置所有访问统计数据吗？此操作不可恢复。')) {
-    chrome.runtime.sendMessage({ action: 'resetVisitStats' }, (response) => {
-      if (response && response.success) {
-        alert('统计数据已重置');
-        updateStatsDisplay();
-      } else {
-        alert('重置失败');
-      }
-    });
-  }
-});
-
-// TODO: 导出统计数据
-
-
 // 保存设置按钮
 document.getElementById('save-settings').addEventListener('click', async () => {
   try {
@@ -220,7 +111,7 @@ document.getElementById('save-settings').addEventListener('click', async () => {
       password: password,
       rules: collectRules()
     };
-    
+
     const response = await chrome.runtime.sendMessage({
       action: 'updateSettings',
       settings: newSettings,

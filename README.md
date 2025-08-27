@@ -74,6 +74,7 @@ extension/
 │   └── options.js        # 设置页面脚本
 ├── icons/                # 扩展图标
 ├── blocked.html          # 被阻止访问页面
+├── blocked.js            #
 └── test.html             # 功能测试页面
 ```
 
