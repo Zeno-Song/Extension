@@ -1,129 +1,73 @@
-# 网页访问控制扩展
+# Website Time Limit Extension
 
-一个功能强大的Chrome扩展，支持网站访问控制和访问时间统计。
+A chrome extension to limit time the user is allowed to spend on a website to improve efficiency.
+The idea comes from the inability of Apple's Screen Time function in settings to limit websites visited on Chrome. I personally use Chrome because it transfers information between my computer and phone well, so I found it necessary to control my YouTube surfing. Instead of limiting by total time spent, which is kind of frustrating when you're watching a Top Gear highlight then suddenly your website is blocked, this extension limits WHEN you can access website, so you're forced to do work or sports or anything productive.
 
-## 功能特性
+Since the Git is public, all changes are welcome!
 
-### 🚫 访问控制
-- 支持黑名单网站设置
-- 时间限制功能（可设置特定时间段禁止访问）
-- 按星期几设置规则
-- 密码保护设置
+## Core Functions
 
-<!-- ### 📊 访问统计
-- 自动分类网站（社交媒体、娱乐、工作学习、购物、新闻资讯、其他）
-- 实时跟踪访问时间
-- 可视化饼图显示时间占比
-- 详细分类统计信息
-- 支持重置统计数据 -->
+### 🚫 Time Limit settings
+- can set multiple limited websites
+- limit access time span on each website
+- limit days of the week
+- password lock/unlock (work in progress)
 
-## 网站分类
+### 📊 Time-on-website Statistics Display (work in progress)
+- categories of websites
+- live tracking of time-on-website for ALL websites, not just the limited ones
+- visualisation: pie chart of time in each category of websites
+- resetting statistics
 
-扩展会自动将访问的网站分为以下类别：
+## Categories of Websites
 
-| 分类 | 包含网站示例 |
+Extension automatically contains following categories (can be expanded):
+
+| Categories | Websites |
 |------|-------------|
-| 社交媒体 | 微博、知乎、B站、Facebook、Twitter、Instagram |
-| 娱乐 | YouTube、腾讯视频、优酷、爱奇艺、TikTok |
-| 工作学习 | GitHub、百度、Google、Stack Overflow、Wikipedia |
-| 购物 | 淘宝、京东、亚马逊、天猫、拼多多 |
-| 新闻资讯 | 新浪、搜狐、网易、CNN、BBC |
-| 其他 | 未分类的网站 |
+| social media | Facebook, Twitter, Instagram |
+| Entertainment | Hulu, Netflix, YouTube, TikTok, ESPN/ |
+| Workflow | LinkedIn, GitHub Google, Stack Overflow, Wikipedia |
+| Shopping | Amazon, Temu |
+| News | CNN, BBC, NPR, CNBC |
+| Others | uncategorised websites |
 
-## 安装方法
+## Installatioin
 
-1. 下载或克隆此项目到本地
-2. 打开Chrome浏览器，进入 `chrome://extensions/`
-3. 开启"开发者模式"
-4. 点击"加载已解压的扩展程序"
-5. 选择项目文件夹
-6. 扩展安装完成
+1. download or clone Git file
+2. click on the extension icon
+3. click Manage Extensions
+4. turn on Developer mode on the top right
+5. click Load Unpacked on the top left
+6. choose the Git file
+7. click extension icon again once upload is successful
+8. click the extension to open the popup window
 
-## 使用方法
-
-### 基本使用
-1. 点击浏览器工具栏中的扩展图标
-2. 查看当前状态和访问统计
-3. 点击"设置"按钮进入详细配置
-
-### 访问控制设置
-1. 在设置页面中设置密码
-2. 添加黑名单网站域名
-3. 设置时间限制（开始时间、结束时间、星期几）
-4. 保存设置
-
-### 查看统计
-1. 点击扩展图标查看实时统计
-2. 观察饼图了解各分类时间占比
-3. 查看详细分类统计信息
-4. 可点击"重置"按钮清空统计数据
-
-## 文件结构
+## Code Structure
 
 ```
-extension/
-├── manifest.json          # 扩展配置文件
-├── background.js          # 后台脚本（核心逻辑）
-├── popup/
-│   ├── popup.html        # 弹出窗口界面
-│   ├── popup.css         # 弹出窗口样式
-│   └── popup.js          # 弹出窗口脚本
-├── options/
-│   ├── options.html      # 设置页面
-│   ├── options.css       # 设置页面样式
-│   └── options.js        # 设置页面脚本
-├── icons/                # 扩展图标
-├── blocked.html          # 被阻止访问页面
-├── blocked.js            #
-└── test.html             # 功能测试页面
+Extension/
+├── manifest.json         # structure and basic information of the extension
+├── background.js         # coordinates information exchange and core functions
+├── popup/                # extension popup window
+│   ├── popup.html
+│   ├── popup.css
+│   └── popup.js
+├── options/              # extension settings window
+│   ├── options.html
+│   ├── options.css
+│   └── options.js
+├── icons/                # graphics
+├── blocked.html          # website blocked page
+└── blocked.js
 ```
 
-## 技术实现
+## Privacy
 
-### 核心功能
-- **网站分类**: 基于域名匹配的自动分类系统
-- **时间跟踪**: 监听标签页和窗口事件，精确计算访问时间
-- **数据存储**: 使用Chrome Storage API持久化存储
-- **实时更新**: 定期刷新统计数据，确保准确性
+- all data stored in Local storage of the browser
+- no servers or external storage involved
+- all data can be deleted at any time
 
-### 事件监听
-- `chrome.tabs.onActivated`: 标签页切换
-- `chrome.tabs.onUpdated`: 页面加载完成
-- `chrome.tabs.onRemoved`: 标签页关闭
-- `chrome.windows.onFocusChanged`: 窗口焦点变化
-
-### 数据统计
-- 访问时间累计
-- 访问次数统计
-- 分类占比计算
-- 实时会话跟踪
-
-## 隐私说明
-
-- 扩展只收集访问的网站域名和访问时间
-- 数据仅存储在本地浏览器中
-- 不会向任何服务器发送数据
-- 可随时重置或删除统计数据
-
-## 测试方法
-
-1. 打开 `test.html` 文件
-2. 点击不同类别的测试链接
-3. 在每个网站停留一段时间
-4. 查看扩展统计结果
-
-## 更新日志
-
-### v1.0
-- 基础访问控制功能
-- 网站分类统计
-- 可视化饼图
-- 实时时间跟踪
-
-## 许可证
+## License
 
 MIT License
-
-## 贡献
-
-欢迎提交Issue和Pull Request来改进这个扩展！ 
