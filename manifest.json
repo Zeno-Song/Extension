@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "网页访问控制",
+  "name": "Website Time Limit",
   "version": "1.0",
-  "description": "通过黑名单控制不能访问的网页，支持时间限制和访问统计",
+  "description": "Create lists of limited websites, limits WHEN you can access a website",
   "icons": {
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
