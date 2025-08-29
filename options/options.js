@@ -13,7 +13,7 @@ chrome.storage.sync.get(['settings'], (result) => {
   renderSettings();
 });
 
-// Rrender new rules in options.html under <id="rules-container">
+// render new rules in options.html under <id="rules-container">
 function renderSettings() {
   // set Activate Extension button to enabled
   document.getElementById('enabled').checked = settings.enabled;

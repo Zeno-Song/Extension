@@ -1,4 +1,4 @@
-// 存储插件状态
+// save settings
 let settings = {
   enabled: true,
   password: '',

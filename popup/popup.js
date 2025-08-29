@@ -4,26 +4,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const rulesCountEl = document.getElementById('rules-count');
   const openOptionsBtn = document.getElementById('open-options');
 
-  // 获取当前设置
+  // update status of popup page
   function updateStatus() {
     chrome.runtime.sendMessage({ action: 'getSettings' }, (response) => {
       if (response && response.settings) {
         const settings = response.settings;
         
-        // 更新状态显示
+        // refresh status
         if (settings.enabled) {
-          statusEl.textContent = '已启用';
+          statusEl.textContent = 'Enabled';
           statusEl.className = 'status enabled';
-          toggleBtn.textContent = '禁用';
+          toggleBtn.textContent = 'Disable';
           toggleBtn.className = 'btn btn-danger';
         } else {
-          statusEl.textContent = '已禁用';
+          statusEl.textContent = 'Disabled';
           statusEl.className = 'status disabled';
-          toggleBtn.textContent = '启用';
+          toggleBtn.textContent = 'Enable';
           toggleBtn.className = 'btn btn-success';
         }
         
-        // 显示规则数量
+        // display effective rules count
         const activeRules = settings.rules.filter(rule => {
           const now = new Date();
           const currentTime = now.getHours() * 60 + now.getMinutes();
@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
           return daysMatch && timeMatch;
         });
 
-        rulesCountEl.textContent = `${activeRules.length}/${settings.rules.length} 条规则生效中`;
+        rulesCountEl.textContent = `${activeRules.length}/${settings.rules.length} Rules Effective`;
       }
     });
   }
 
-  // 切换启用状态
+  // update Enabled/Disabled status
   toggleBtn.addEventListener('click', () => {
     chrome.runtime.sendMessage({ action: 'toggleEnabled' }, (response) => {
       if (response && response.success) {
@@ -51,11 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 打开选项页面
+  // open Settings page
   openOptionsBtn.addEventListener('click', () => {
     chrome.runtime.openOptionsPage();
   });
 
-  // 初始化状态和统计
+  // initialise popup page
   updateStatus();
 });
