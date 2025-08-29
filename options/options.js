@@ -1,11 +1,11 @@
-// 存储设置
+// dictionary, save settings
 let settings = {
   enabled: true,
   password: '',
   rules: []
 };
 
-// 加载设置
+// import settings into <settings> dictionary
 chrome.storage.sync.get(['settings'], (result) => {
   if (result.settings) {
     settings = { ...settings, ...result.settings };
@@ -13,23 +13,23 @@ chrome.storage.sync.get(['settings'], (result) => {
   renderSettings();
 });
 
-// 渲染设置界面
+// Rrender new rules in options.html under <id="rules-container">
 function renderSettings() {
-  // 设置启用状态
+  // set Activate Extension button to enabled
   document.getElementById('enabled').checked = settings.enabled;
   
-  // 设置密码字段
+  // mport password
   document.getElementById('password').value = settings.password;
   document.getElementById('confirm-password').value = settings.password;
   
-  // 渲染规则列表
+  // render new rule
   const rulesContainer = document.getElementById('rules-container');
   rulesContainer.innerHTML = '';
   
   settings.rules.forEach((rule, index) => {
     const li = document.createElement('li');
     
-    const daysText = rule.days.map(d => ['日','一','二','三','四','五','六'][d]).join(',');
+    const daysText = rule.days.map(d => ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d]).join(',');
     const timeText = `${rule.startHour}:${rule.startMinute.toString().padStart(2, '0')} - ${rule.endHour}:${rule.endMinute.toString().padStart(2, '0')}`;
     
     li.innerHTML = `
@@ -38,10 +38,10 @@ function renderSettings() {
         <span class="time">${timeText}</span>
         <span class="days">${daysText}</span>
       </div>
-      <button class="delete-rule" data-index="${index}">删除</button>
+      <button class="delete-rule" data-index="${index}">Delete</button>
     `;
     
-    // 设置data属性
+    // set li attributes
     li.dataset.startHour = rule.startHour;
     li.dataset.startMinute = rule.startMinute;
     li.dataset.endHour = rule.endHour;
@@ -51,7 +51,7 @@ function renderSettings() {
     rulesContainer.appendChild(li);
   });
   
-  // 添加删除规则事件
+  // delete function
   document.querySelectorAll('.delete-rule').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const index = parseInt(e.target.getAttribute('data-index'));
@@ -61,7 +61,7 @@ function renderSettings() {
   });
 }
 
-// 添加规则
+// add rule
 document.getElementById('add-rule').addEventListener('click', () => {
   const domain = document.getElementById('domain').value.trim();
   const startHour = parseInt(document.getElementById('start-hour').value);
@@ -73,12 +73,12 @@ document.getElementById('add-rule').addEventListener('click', () => {
     .map(checkbox => parseInt(checkbox.value));
   
   if (!domain) {
-    alert('请输入域名');
+    alert('Please input Website');
     return;
   }
   
   if (days.length === 0) {
-    alert('请选择至少一个生效日');
+    alert('Please choose at least one Day of the Week');
     return;
   }
   
@@ -95,7 +95,7 @@ document.getElementById('add-rule').addEventListener('click', () => {
   renderSettings();
 });
 
-// 保存设置按钮
+// save settings
 document.getElementById('save-settings').addEventListener('click', async () => {
   try {
     const password = document.getElementById('password').value;
@@ -103,7 +103,7 @@ document.getElementById('save-settings').addEventListener('click', async () => {
     const enabled = document.getElementById('enabled').checked;
     
     if (password !== confirmPassword) {
-      throw new Error('两次输入的密码不一致');
+      throw new Error('Password disagreement');
     }
     
     const newSettings = {
@@ -120,17 +120,17 @@ document.getElementById('save-settings').addEventListener('click', async () => {
     
     if (response?.success) {
       settings = newSettings;
-      alert('设置已保存');
+      alert('Settings saved');
     } else {
-      throw new Error(response?.error || '保存失败');
+      throw new Error(response?.error || 'Save failed');
     }
   } catch (error) {
-    console.error('保存设置出错:', error);
-    alert(`保存失败: ${error.message}`);
+    console.error('Save settings error:', error);
+    alert(`Save failed: ${error.message}`);
   }
 });
 
-// 收集所有规则的函数
+// collect rules, called in <newSettings> to be saved to <settings>
 function collectRules() {
   return Array.from(document.querySelectorAll('#rules-container li')).map(li => {
     return {
