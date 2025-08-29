@@ -5,7 +5,7 @@ let settings = {
   rules: []
 };
 
-// import settings into <settings> dictionary
+// import settings into <settings> dictionary, render setting changes
 chrome.storage.sync.get(['settings'], (result) => {
   if (result.settings) {
     settings = { ...settings, ...result.settings };
@@ -41,7 +41,7 @@ function renderSettings() {
       <button class="delete-rule" data-index="${index}">Delete</button>
     `;
     
-    // set li attributes
+    // set <li> attributes
     li.dataset.startHour = rule.startHour;
     li.dataset.startMinute = rule.startMinute;
     li.dataset.endHour = rule.endHour;

@@ -5,14 +5,14 @@ let settings = {
   rules: []
 };
 
-// 加载保存的设置和统计数据
+// import settings into <settings> dictionary
 chrome.storage.sync.get(['settings'], (result) => {
   if (result.settings) {
     settings = { ...settings, ...result.settings };
   }
 });
 
-// TODO: 监听导航事件，阻止访问黑名单网站
+// listen for navigation event, jump to blocked.html to realise blocking effect
 chrome.webNavigation.onBeforeNavigate.addListener((details) => {
   if (!settings.enabled) return;
   
@@ -20,9 +20,9 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
   const domain = url.hostname;
   const now = new Date();
   const currentTime = now.getHours() * 60 + now.getMinutes();
-  const dayOfWeek = now.getDay(); // 0是周日，6是周六
+  const dayOfWeek = now.getDay(); // 0 is Sun, 6 is Sat
 
-  // 检查是否有匹配的规则
+  // check if website is within Rules list
   for (const rule of settings.rules) {
     const ruleStart = rule.startHour * 60 + rule.startMinute;
     const ruleEnd = rule.endHour * 60 + rule.endMinute;
@@ -31,7 +31,7 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     const domainMatch = domain.includes(rule.domain) || url.href.includes(rule.domain);
 
     if (daysMatch && timeMatch && domainMatch) {
-      // 阻止访问
+      // jump to blocked.html, effectively blocking the website
       chrome.tabs.update(details.tabId, {
         url: chrome.runtime.getURL('blocked.html')
       });
@@ -41,12 +41,12 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
 });
 
 
-// 保存设置
+// save settings into local storage
 function saveSettings() {
   chrome.storage.sync.set({ settings });
 }
 
-// 接收来自popup或options页的消息
+// accept and send messages from popup and options, links popup and options changes together
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'getSettings') {
     sendResponse({ settings });
@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       saveSettings();
       sendResponse({ success: true });
     } else {
-      sendResponse({ success: false, error: '密码错误' });
+      sendResponse({ success: false, error: 'Incorrect Password' });
     }
   } else if (request.action === 'toggleEnabled') {
     settings.enabled = !settings.enabled;
