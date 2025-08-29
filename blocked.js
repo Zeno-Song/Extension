@@ -21,6 +21,6 @@ function goHome() {
     window.location.href = 'https://www.google.com';
 }
 
-// 更新时间
+// update time
 updateTime();
 setInterval(updateTime, 1000);
